@@ -3,4 +3,5 @@
     <stroke android:color="@color/white" android:width="1sp"/>
     <corners android:radius="5sp"/>
     <solid android:color="#0C42FF"/>
+    <gradient android:startColor="#5d69be" android:endColor="#c897eb"/>
 </shape>
