@@ -9,31 +9,21 @@
     android:background="@drawable/button_style"
     tools:context=".MainActivity2">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/tempok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/login_logo"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100sp"
-        android:elevation="8dp"
-        app:cardCornerRadius="35dp">
+        android:layout_marginTop="50sp"
 
-        <ImageView
-            android:id="@+id/r_logo"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:elevation="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/clogo" />
-
-
-    </androidx.cardview.widget.CardView>
+        android:src="@drawable/clogo" />
 
     <TextView
         android:id="@+id/appname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tempok"
+        android:layout_below="@id/login_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10sp"
         android:text="xoxoxo"
@@ -56,11 +46,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="30sp"
-            android:textStyle="bold"
-
             android:text="Log in"
+
             android:textColor="#afeeee"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/usernm_edittext"
@@ -111,9 +101,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/forget_pass"
-            android:layout_marginTop="10sp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15sp"
+            android:layout_marginTop="10sp"
             android:layout_marginRight="15sp"
             android:background="@drawable/button_gredi"
             android:text="Log in"

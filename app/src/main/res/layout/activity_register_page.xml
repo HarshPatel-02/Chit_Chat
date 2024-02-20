@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/button_style"
+    tools:context=".register_page">
+
+    <RelativeLayout
+        android:id="@+id/register_pt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/register_logo"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50sp"
+
+            android:src="@drawable/clogo" />
+        <TextView
+            android:id="@+id/register_create_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20sp"
+            android:text="Create New Account"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/register_usernm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_create_new"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your username"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <EditText
+            android:id="@+id/register_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_usernm"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your Password"
+            android:inputType="textPassword"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+
+        <EditText
+            android:id="@+id/register_con_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_pass"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Retype Password"
+            android:inputType="textPassword"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+
+        <EditText
+            android:id="@+id/register_personalnm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_con_pass"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your Full name"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <RadioGroup
+            android:id="@+id/register_radiogrp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_personalnm"
+            android:layout_marginLeft="35sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="30sp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/register_radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/register_radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40sp"
+
+                android:text="Female"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_radiogrp"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your Email address"
+            android:inputType="textEmailAddress"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <Button
+            android:id="@+id/rigister_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/register_email"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="40sp"
+
+            android:background="@drawable/register_nextbtn"
+            android:text="Next"
+            android:textColor="@color/white"
+
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_pt1"
+        android:id="@+id/register_pt2"
+        >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Going"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
