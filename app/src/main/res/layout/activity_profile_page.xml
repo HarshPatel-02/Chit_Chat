@@ -16,6 +16,16 @@
         android:text="xoxoxo"
         android:textColor="#01FF00"
         android:textSize="35sp" />
+
+    <ImageButton
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="25sp"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:src="@drawable/settings"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -70,6 +80,7 @@
         android:textSize="22sp"
         android:layout_marginLeft="25sp"
         android:layout_marginTop="5sp"
+        android:textStyle="bold"
         />
 
 
@@ -84,6 +95,7 @@
         android:textSize="22sp"
         android:layout_marginLeft="45sp"
         android:layout_marginTop="5sp"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -91,6 +103,7 @@
         android:layout_height="wrap_content"
         android:text="Buddy\n20"
         android:textColor="@color/white"
+        android:textStyle="bold"
         android:layout_below="@id/p_personname"
         android:layout_toRightOf="@id/p_buddy"
 
@@ -99,6 +112,56 @@
         android:layout_marginLeft="45sp"
         android:layout_marginTop="5sp"
         />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Believe in karma\nmy life m y rule and rool\nOrphic"
+        android:textSize="18sp"
+        android:id="@+id/p_bio"
+        android:textColor="@color/white"
+        android:layout_below="@id/p_memories"
+        android:layout_marginLeft="22sp"
+        android:layout_marginTop="10sp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:background="@drawable/btn_style_editpro"
+        android:paddingLeft="35sp"
+        android:paddingRight="35sp"
+        android:paddingTop="0sp"
+        android:paddingBottom="0sp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:layout_below="@id/p_bio"
+        android:id="@+id/p_editpro"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="20sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share Profile"
+        android:background="@drawable/btn_style_editpro"
+        android:paddingLeft="35sp"
+        android:paddingRight="35sp"
+        android:layout_toRightOf="@id/p_editpro"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:layout_below="@id/p_bio"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="20sp"/>
+
+
+
+
+
+
+
 
 
 </RelativeLayout>
