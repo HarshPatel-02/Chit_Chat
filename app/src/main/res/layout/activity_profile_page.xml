@@ -156,6 +156,11 @@
         android:layout_marginTop="15sp"
         android:layout_marginLeft="20sp"/>
 
+    <ImageButton
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:src="@drawable/post"/>
+
 
 
 
