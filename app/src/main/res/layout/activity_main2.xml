@@ -40,63 +40,74 @@
         android:textColor="#01FF00"
         android:textSize="35sp" />
 
-    <EditText
-        android:id="@+id/usernm_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/appname"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="30sp"
-        android:layout_marginRight="35sp"
-        android:background="@drawable/edittext_style"
-        android:hint="Enter Your Username"
-        android:padding="15sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/pass_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/usernm_edittext"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="40sp"
-        android:layout_marginRight="35sp"
-        android:background="@drawable/edittext_style"
-        android:hint="Enter Your Password"
-        android:inputType="textPassword"
-        android:padding="15sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="20sp" />
-
-
-    <Button
-        android:id="@+id/forget_pass"
+    <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_marginTop="30sp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pass_edittext"
-        android:layout_alignRight="@id/pass_edittext"
-        android:layout_marginTop="20sp"
-        android:background="@drawable/button_style_nobg"
-        android:text="Forget Your Password?"
-        android:textColor="#00F8FF"
-        android:textSize="17sp" />
-
-    <Button
-        android:id="@+id/l_login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/forget_pass"
+        android:background="@drawable/box_style"
         android:layout_marginLeft="15sp"
-        android:layout_marginTop="10sp"
-        android:layout_marginRight="35sp"
-        android:background="@drawable/button_style"
-        android:text="Log in"
-        android:textColor="@color/white"
+        android:layout_marginRight="15sp"
+        android:paddingBottom="30sp"
+        android:layout_below="@id/appname">
 
-        android:textSize="22sp" />
+        <EditText
+            android:id="@+id/usernm_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appname"
+            android:layout_marginLeft="15sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="35sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your Username"
+            android:padding="15sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/pass_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernm_edittext"
+            android:layout_marginLeft="15sp"
+            android:layout_marginTop="40sp"
+            android:layout_marginRight="35sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Enter Your Password"
+            android:inputType="textPassword"
+            android:padding="15sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:id="@+id/forget_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pass_edittext"
+            android:layout_alignRight="@id/pass_edittext"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/button_style_nobg"
+            android:text="Forget Your Password?"
+            android:textColor="#00F8FF"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/l_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/forget_pass"
+            android:layout_marginLeft="15sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginRight="35sp"
+            android:background="@drawable/button_style"
+            android:text="Log in"
+            android:textColor="@color/white"
+
+            android:textSize="22sp" />
+    </RelativeLayout>
 
 
 </RelativeLayout>
