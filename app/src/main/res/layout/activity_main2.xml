@@ -24,7 +24,7 @@
             android:layout_height="90dp"
             android:elevation="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo" />
+            android:src="@drawable/clogo" />
 
 
     </androidx.cardview.widget.CardView>
