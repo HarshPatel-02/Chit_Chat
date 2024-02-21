@@ -21,6 +21,7 @@
             android:layout_marginTop="50sp"
 
             android:src="@drawable/clogo" />
+
         <TextView
             android:id="@+id/register_create_new"
             android:layout_width="wrap_content"
@@ -41,6 +42,8 @@
             android:layout_marginTop="30sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/username"
+            android:drawablePadding="10sp"
             android:hint="Enter Your username"
             android:padding="10sp"
             android:textColor="@color/black"
@@ -55,6 +58,8 @@
             android:layout_marginTop="30sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="10sp"
             android:hint="Enter Your Password"
             android:inputType="textPassword"
             android:padding="10sp"
@@ -71,6 +76,8 @@
             android:layout_marginTop="30sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/conpassword"
+            android:drawablePadding="10sp"
             android:hint="Retype Password"
             android:inputType="textPassword"
             android:padding="10sp"
@@ -87,6 +94,8 @@
             android:layout_marginTop="30sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/fullname"
+            android:drawablePadding="10sp"
             android:hint="Enter Your Full name"
             android:padding="10sp"
             android:textColor="@color/black"
@@ -132,6 +141,8 @@
             android:layout_marginTop="20sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/email"
+            android:drawablePadding="10sp"
             android:hint="Enter Your Email address"
             android:inputType="textEmailAddress"
             android:padding="10sp"
@@ -157,64 +168,79 @@
 
 
     <RelativeLayout
+        android:id="@+id/register_pt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_pt1"
-        android:id="@+id/register_pt2"
-        >
+        android:layout_below="@id/register_pt1">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_image"
             android:layout_width="120sp"
             android:layout_height="120sp"
-            app:civ_border_color="@color/black"
-            android:src="@drawable/user"
-
-            app:civ_border_width="2sp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100sp" />
+
+            android:layout_marginTop="100sp"
+            android:src="@drawable/persone" />
 
         <Button
+            android:id="@+id/register_changeimg_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Your Photo"
             android:layout_below="@id/user_image"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/button_style_nobg"
-            android:textSize="22sp"
-            android:id="@+id/register_changeimg_btn"
+            android:text="Add Your Photo"
             android:textColor="#0003FF"
 
-            android:layout_centerHorizontal="true"/>
+            android:textSize="22sp" />
 
 
         <EditText
+            android:id="@+id/register_biotxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/register_changeimg_btn"
-            android:inputType="textMultiLine"
-            android:maxLines="8"
-            android:hint="Add Your Bio"
-            android:id="@+id/register_biotxt"
             android:layout_marginLeft="30sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
+            android:hint="Add Your Bio"
+            android:inputType="textMultiLine"
+            android:maxLines="8"
             android:padding="10sp"
 
-            android:scrollbars="horizontal"/>
+            android:scrollbars="horizontal" />
 
-
-        <Button
-            android:id="@+id/rigister_next"
+        <EditText
+            android:id="@+id/mobilenum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/register_biotxt"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:drawableLeft="@drawable/mobile"
+            android:drawablePadding="10sp"
+            android:hint="Enter Your Full name"
+            android:padding="10sp"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+
+        <Button
+            android:id="@+id/register_createaccbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mobilenum"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="40sp"
             android:layout_marginTop="30sp"
             android:layout_marginRight="40sp"
 
             android:background="@drawable/register_nextbtn"
-            android:text="Create My Account"
+            android:text="Create Account"
             android:textColor="@color/white"
 
             android:textSize="20sp" />
