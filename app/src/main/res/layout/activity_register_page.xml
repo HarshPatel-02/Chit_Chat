@@ -118,6 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
+                android:buttonTint="@color/white"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -128,6 +129,7 @@
                 android:layout_marginLeft="40sp"
 
                 android:text="Female"
+                android:buttonTint="@color/white"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
