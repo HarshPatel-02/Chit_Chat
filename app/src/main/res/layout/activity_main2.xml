@@ -26,8 +26,8 @@
         android:layout_below="@id/login_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10sp"
-        android:text="xoxoxo"
-        android:textColor="#01FF00"
+        android:text="ChitChat"
+        android:textColor="#afeeee"
         android:textSize="35sp" />
 
     <RelativeLayout
