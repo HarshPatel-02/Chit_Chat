@@ -162,7 +162,7 @@
 
             android:background="@drawable/register_nextbtn"
             android:text="Next"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
 
             android:textSize="20sp" />
     </RelativeLayout>
