@@ -59,16 +59,20 @@
             android:layout_below="@id/appname"
             android:layout_marginLeft="30sp"
             android:layout_marginTop="60sp"
+            android:drawableLeft="@drawable/username"
+            android:drawablePadding="10sp"
             android:layout_marginRight="30sp"
             android:background="@drawable/edittext_style"
             android:hint="Enter Your Username"
             android:padding="15sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/pass_edittext"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/usernm_edittext"
@@ -79,8 +83,8 @@
             android:hint="Enter Your Password"
             android:inputType="textPassword"
             android:padding="15sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="20sp" />
 
 

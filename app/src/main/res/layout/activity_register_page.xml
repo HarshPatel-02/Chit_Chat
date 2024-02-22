@@ -46,8 +46,8 @@
             android:drawablePadding="10sp"
             android:hint="Enter Your username"
             android:padding="10sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <EditText
             android:id="@+id/register_pass"
@@ -63,8 +63,8 @@
             android:hint="Enter Your Password"
             android:inputType="textPassword"
             android:padding="10sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
 
         <EditText
@@ -81,8 +81,8 @@
             android:hint="Retype Password"
             android:inputType="textPassword"
             android:padding="10sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
 
         <EditText
@@ -98,8 +98,8 @@
             android:drawablePadding="10sp"
             android:hint="Enter Your Full name"
             android:padding="10sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <RadioGroup
             android:id="@+id/register_radiogrp"
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Male"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <RadioButton
@@ -128,7 +128,7 @@
                 android:layout_marginLeft="40sp"
 
                 android:text="Female"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </RadioGroup>
@@ -147,8 +147,8 @@
             android:hint="Enter Your Email address"
             android:inputType="textEmailAddress"
             android:padding="10sp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
         <Button
             android:id="@+id/rigister_next"
@@ -208,6 +208,8 @@
             android:inputType="textMultiLine"
             android:maxLines="8"
             android:padding="10sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
 
             android:scrollbars="horizontal" />
 
@@ -226,8 +228,8 @@
             android:padding="10sp"
             android:inputType="phone"
             android:maxLength="10"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
 
         <Button
