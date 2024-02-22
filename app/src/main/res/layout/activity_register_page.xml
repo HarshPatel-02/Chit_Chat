@@ -109,6 +109,7 @@
             android:layout_below="@id/register_personalnm"
             android:layout_marginLeft="35sp"
             android:layout_marginTop="20sp"
+
             android:layout_marginRight="30sp"
             android:orientation="horizontal">
 

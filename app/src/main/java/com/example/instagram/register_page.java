@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class register_page extends AppCompatActivity {
 
-    String imgpath;
+    String imgpath="";
     private final int GALARY_REQ_CODE = 100;
     RelativeLayout firstLayout;
     RelativeLayout secondLayout;
@@ -35,6 +36,10 @@ public class register_page extends AppCompatActivity {
     EditText usernm, pass, cpass, fullnm, email, bio, mob;
     RadioButton r1, r2;
     ImageView imageView;
+
+    ProgressDialog progressdialog;
+
+
 
     @Override
 
@@ -64,6 +69,7 @@ public class register_page extends AppCompatActivity {
         mob = findViewById(R.id.mobilenum);
 
         createaccount = findViewById(R.id.register_createaccbtn);
+        progressdialog=new ProgressDialog(this);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +111,10 @@ public class register_page extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please Enter All Detail", Toast.LENGTH_LONG).show();
 
                 }else{
+                    progressdialog.setMessage("Plese Wait while we creating your Account");
+                    progressdialog.setTitle("Creating account");
+                    progressdialog.setCanceledOnTouchOutside(false);
+                    progressdialog.show();
                         insertdatat();
                 }
             }
@@ -150,6 +160,7 @@ public class register_page extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(getApplicationContext(), "Data Inserted ", Toast.LENGTH_LONG).show();
+                        progressdialog.dismiss();
 
                     }
                 })
