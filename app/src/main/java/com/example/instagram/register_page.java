@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,16 +18,32 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class register_page extends AppCompatActivity {
 
-    String imgpath="";
+    boolean imgflg = true;
+
+    StorageReference storageReference;
+    Uri imgpath = Uri.parse("");
+
     private final int GALARY_REQ_CODE = 100;
     RelativeLayout firstLayout;
     RelativeLayout secondLayout;
@@ -40,12 +57,12 @@ public class register_page extends AppCompatActivity {
     ProgressDialog progressdialog;
 
 
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
+
 
         firstLayout = findViewById(R.id.register_pt1);
         secondLayout = findViewById(R.id.register_pt2);
@@ -69,7 +86,7 @@ public class register_page extends AppCompatActivity {
         mob = findViewById(R.id.mobilenum);
 
         createaccount = findViewById(R.id.register_createaccbtn);
-        progressdialog=new ProgressDialog(this);
+        progressdialog = new ProgressDialog(this);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +99,31 @@ public class register_page extends AppCompatActivity {
 
 
                 } else {
+                        //checking if username is availble or not
+                    DatabaseReference db=FirebaseDatabase.getInstance().getReference();
+                    db.child("Users").orderByChild("username").equalTo(usernm.getText().toString())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()){
+                                                Toast.makeText(getApplicationContext(),"Username exits",Toast.LENGTH_SHORT).show();
+                                                usernm.setError("Username exits");
+                                                usernm.requestFocus();
+                                            }
+                                            else {
+                                                firstLayout.setVisibility(View.GONE);
+                                                // Show the second layout
+                                                secondLayout.setVisibility(View.VISIBLE);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
 
 
-                    firstLayout.setVisibility(View.GONE);
-                    // Show the second layout
-                    secondLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -107,15 +144,15 @@ public class register_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (bio.getText().toString().equals("") || mob.getText().toString().equals("")){
+                if (bio.getText().toString().equals("") || mob.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please Enter All Detail", Toast.LENGTH_LONG).show();
 
-                }else{
+                } else {
                     progressdialog.setMessage("Plese Wait while we creating your Account");
                     progressdialog.setTitle("Creating account");
                     progressdialog.setCanceledOnTouchOutside(false);
                     progressdialog.show();
-                        insertdatat();
+                    insertdatat();
                 }
             }
         });
@@ -128,39 +165,86 @@ public class register_page extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == GALARY_REQ_CODE) {
-                imageView.setImageURI(data.getData());
-                imgpath= String.valueOf(data.getData());
+
+                Uri selectedImageUri = data.getData();
+                imageView.setImageURI(selectedImageUri);
+
+                // Store the image URI directly
+                imgpath = data.getData();
+                imgflg = false;
+
             }
         }
     }
 
     //inseert data
-    private void insertdatat(){
+    private void insertdatat() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy_mm_dd_HH_mm_ss", Locale.CANADA);
+        Date dt = new Date();
+        String filenm = format.format(dt);
+
         Map<String, Object> userValues = new HashMap<>();
         userValues.put("username", usernm.getText().toString());
         userValues.put("password", pass.getText().toString());
         userValues.put("fullname", fullnm.getText().toString());
-        String gender="";
-        if (r1.isChecked()==true){
-            gender="Male";
-        }else{
-            gender="Female";
+        String gender = "";
+        if (r1.isChecked() == true) {
+            gender = "Male";
+        } else {
+            gender = "Female";
         }
 
         userValues.put("gender", gender);
         userValues.put("email", email.getText().toString());
 
         userValues.put("bio", bio.getText().toString());
-        userValues.put("mob",mob.getText().toString());
-        userValues.put("userimg",imgpath.toString());
+        userValues.put("mob", mob.getText().toString());
+        userValues.put("userimg", filenm+".jpeg");
+
+        storageReference = FirebaseStorage.getInstance().getReference("images/" + filenm+".jpeg");
+        if (imgflg == false) {
+            storageReference.putFile(imgpath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getApplicationContext(), "Done ", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("FirebaseStorage", "Upload failed: " + e.getMessage());
+                            Toast.makeText(getApplicationContext(), "no ", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        } else {
+            Uri defaultImageUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.persone);
+            storageReference.putFile(defaultImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getApplicationContext(), "Done with default image", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("FirebaseStorage", "Upload failed: " + e.getMessage());
+                            Toast.makeText(getApplicationContext(), "defsaulgyhjno ", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
+
 
         FirebaseDatabase.getInstance().getReference().child("Users").push()
                 .setValue(userValues)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Toast.makeText(getApplicationContext(), "Data Inserted ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Account Created please login ", Toast.LENGTH_LONG).show();
                         progressdialog.dismiss();
+                        Intent i=new Intent(getApplicationContext(),MainActivity2.class);
+                        startActivity(i);
 
                     }
                 })

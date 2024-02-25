@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".New_post">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="200sp"
+        android:id="@+id/newp_btn_layout"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/custom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="80sp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/upload_btn_design"
+            android:drawableLeft="@drawable/upload_post"
+            android:drawablePadding="30sp"
+
+            android:gravity="center"
+            android:padding="20sp"
+            android:text="Add New Post"
+            android:textAllCaps="false"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:layout_above="@+id/linebtn"
+        android:id="@+id/postuploadlayout"
+        android:layout_below="@+id/newp_btn_layout">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:id="@+id/imagetoupload"
+            android:src="@drawable/p1"/>
+
+
+
+        <EditText
+            android:id="@+id/caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imagetoupload"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp"
+            android:background="@drawable/edittext_style"
+            android:hint="Add Your Bio"
+            android:inputType="textMultiLine"
+            android:maxLines="8"
+            android:padding="10sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:layout_marginTop="20sp"
+
+            android:scrollbars="horizontal" />
+
+
+        <Button
+
+            android:id="@+id/upload_user_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Post"
+            android:background="@drawable/button_style_addpost"
+            android:layout_marginLeft="30sp"
+            android:layout_marginTop="30sp"
+            android:layout_below="@id/caption"
+            android:layout_marginRight="30sp"/>
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:id="@+id/linebtn"
+        android:background="@color/white"
+        android:layout_above="@+id/btnlist"
+
+        android:layout_marginBottom="8sp"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
+        android:id="@+id/btnlist"
+        android:layout_alignParentBottom="true">
+
+
+
+        <ImageButton
+            android:id="@+id/homebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/home_btn" />
+
+
+        <ImageButton
+            android:id="@+id/chatbtn"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="70sp"
+            android:layout_toRightOf="@id/homebtn"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/chat_btn" />
+
+        <ImageButton
+            android:id="@+id/newpost"
+            android:layout_width="38sp"
+            android:layout_toRightOf="@id/chatbtn"
+            android:layout_height="38sp"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="70sp"
+            android:src="@drawable/new_post" />
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_userimgbtn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toRightOf="@id/newpost"
+            android:layout_marginLeft="70sp"
+
+            android:src="@drawable/tempimg" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
