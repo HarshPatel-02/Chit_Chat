@@ -1,7 +1,7 @@
 package com.example.instagram;
 
 public class Dataaccess {
-    String userimg,password,mob,gender,fullname,email,bio;
+    String userimg,password,mob,gender,fullname,email,bio,img;
 
     public Dataaccess(String userimg, String password, String mob, String gender, String fullname, String email, String bio) {
         this.userimg = userimg;
@@ -11,6 +11,14 @@ public class Dataaccess {
         this.fullname = fullname;
         this.email = email;
         this.bio = bio;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getUserimg() {

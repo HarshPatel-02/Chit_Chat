@@ -1,3 +1,4 @@
+
 package com.example.instagram;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -38,18 +40,19 @@ import java.util.ArrayList;
 public class profile_page extends AppCompatActivity {
 
     GridView gridView;
-    ArrayList<DataClass> dataList;
     MyAdapter myAdapter;
 
     ProgressDialog progressDialog;
     String bio = "";
     String img = "";
     String username;
-    TextView textviewbio, textviewusername;
+    TextView textviewbio, textviewusername,memories;
     ImageView imageView, imageViewbtn;
     StorageReference storageReference;
 
     ImageButton newpostbtn;
+    ArrayList imges = new ArrayList();
+    ArrayList<String> imgesnames = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +70,11 @@ public class profile_page extends AppCompatActivity {
         imageView = findViewById(R.id.profile_userimg);
         imageViewbtn = findViewById(R.id.profile_userimgbtn);
 
+        memories=findViewById(R.id.p_memories);
         // Set username TextView
         textviewusername.setText(username);
-
-
         // Get user data from Firebase
         getdata();
-
-
         //go to new post activity
         newpostbtn = findViewById(R.id.newpost);
         newpostbtn.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +84,78 @@ public class profile_page extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        //gridview
+        gridView = findViewById(R.id.gridviewforim);
+        //imges.add(R.drawable.ic_launcher_background);
+        getuserpostname();
+
+        myAdapter = new MyAdapter(this, imges);
+        gridView.setAdapter(myAdapter);
+        //Toast.makeText(getApplicationContext(), (CharSequence) imgesnames.get(0),Toast.LENGTH_SHORT);
+
+    }
+
+    private void getuserimg(String im){
+        Toast.makeText(getApplicationContext(),im,Toast.LENGTH_SHORT).show();
+        storageReference=FirebaseStorage.getInstance().getReference().child("USerPost/"+im);
+        try {
+            File localImg =File.createTempFile("temppostfile",".jpeg");
+            storageReference.getFile(localImg)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                            Bitmap bitmap = BitmapFactory.decodeFile(localImg.getAbsolutePath());
+                            imges.add(bitmap);
+
+                            memories.setText("Memories"+"\n"+imges.size());
+                            myAdapter.notifyDataSetChanged();
+                            //imageView.setImageBitmap(bitmap);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("StorageError", "Failed to download image: " + e.getMessage());
+
+                        }
+                    });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void getuserpostname(){
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+            Query query = databaseReference.orderByChild("userId").equalTo(username);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                            Dataaccess dataaccess = snapshot1.getValue(Dataaccess.class);
+                            // Assuming imgesnames is a list to store image names
+                            imgesnames.add(dataaccess.getImg());
+                        }
+                        // Display all image names using Toast
+                        for (String im : imgesnames) {
+                            Toast.makeText(getApplicationContext(), im, Toast.LENGTH_SHORT).show();
+                            getuserimg(im);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No posts found for this user", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getApplicationContext(), "Failed to fetch posts: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
     }
 
@@ -152,28 +224,4 @@ public class profile_page extends AppCompatActivity {
         }
     }
 
-    private void displayalluserimage() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("USerPost");
-
-        gridView = findViewById(R.id.gridviewforim);
-        dataList = new ArrayList<>();
-        myAdapter = new MyAdapter(dataList, this);
-        gridView.setAdapter(myAdapter);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
-                    dataList.add(dataClass);
-                }
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }

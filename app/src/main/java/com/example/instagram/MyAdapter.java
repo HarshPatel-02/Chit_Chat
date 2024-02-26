@@ -13,18 +13,19 @@ import java.util.ArrayList;
 
 public class MyAdapter extends BaseAdapter {
 
-    private ArrayList<DataClass> dataList;
-    private Context context;
+    Context context;
 
-    MyAdapter(ArrayList<DataClass> dataList, Context context){
-        this.dataList=dataList;
-        this.context=context;
+
+    ArrayList<Bitmap> imgesa = new ArrayList();
+
+    public MyAdapter(Context context, ArrayList imgesa) {
+        this.context = context;
+        this.imgesa = imgesa;
     }
 
-    LayoutInflater layoutInflater;
     @Override
     public int getCount() {
-        return dataList.size();
+        return imgesa.size();
     }
 
     @Override
@@ -39,19 +40,11 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (layoutInflater==null){
-            layoutInflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view=layoutInflater.inflate(R.layout.grid_item,null);
 
-        }
-        if(view==null){
-            view=layoutInflater.inflate(R.layout.grid_item,null);
-        }
-
-        ImageView imgviewad=view.findViewById(R.id.gridimage);
-        Bitmap bitmap = BitmapFactory.decodeFile(dataList.get(i).getImageURL());
-
-        // Set bitmap to ImageView
-        imgviewad.setImageBitmap(bitmap);
+        ImageView img=(ImageView)view.findViewById(R.id.gridimage);
+       img.setImageBitmap(imgesa.get(i));
         return view;
     }
 }

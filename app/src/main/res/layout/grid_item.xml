@@ -7,7 +7,13 @@
     <ImageView
         android:layout_width="150sp"
         android:id="@+id/gridimage"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
+        android:background="#1f1f1f"
         android:layout_height="150sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/grid_sep_line" />
 
 </LinearLayout>
