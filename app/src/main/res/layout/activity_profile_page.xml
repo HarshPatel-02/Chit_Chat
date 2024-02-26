@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20sp"
 
-        android:src="@drawable/tempimg" />
+        android:src="@drawable/persone" />
 
     <TextView
         android:id="@+id/p_personname"
@@ -155,6 +155,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="3"
+            android:id="@+id/gridviewforim"
+
             android:scrollbars="vertical"
             >
 
@@ -220,7 +222,7 @@
             android:layout_toRightOf="@id/newpost"
             android:layout_marginLeft="70sp"
 
-            android:src="@drawable/tempimg" />
+            android:src="@drawable/persone" />
 
     </RelativeLayout>
 

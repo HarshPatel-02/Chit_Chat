@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,15 +33,20 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class profile_page extends AppCompatActivity {
+
+    GridView gridView;
+    ArrayList<DataClass> dataList;
+    MyAdapter myAdapter;
 
     ProgressDialog progressDialog;
     String bio = "";
     String img = "";
     String username;
     TextView textviewbio, textviewusername;
-    ImageView imageView,imageViewbtn;
+    ImageView imageView, imageViewbtn;
     StorageReference storageReference;
 
     ImageButton newpostbtn;
@@ -50,7 +56,7 @@ public class profile_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         // Get the username from SharedPreferences
         SharedPreferences pref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
         username = pref.getString("usernm", "no");
@@ -64,16 +70,17 @@ public class profile_page extends AppCompatActivity {
         // Set username TextView
         textviewusername.setText(username);
 
+
         // Get user data from Firebase
-       // getdata();
+        getdata();
 
 
         //go to new post activity
-        newpostbtn=findViewById(R.id.newpost);
+        newpostbtn = findViewById(R.id.newpost);
         newpostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(getApplicationContext(),New_post.class);
+                Intent i = new Intent(getApplicationContext(), New_post.class);
                 startActivity(i);
             }
         });
@@ -83,6 +90,7 @@ public class profile_page extends AppCompatActivity {
     // Method to fetch user data from Firebase Realtime Database
     private void getdata() {
         progressDialog.setMessage("Fetching Your Data");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users");
         Query query = database.orderByChild("username").equalTo(username);
@@ -127,6 +135,7 @@ public class profile_page extends AppCompatActivity {
                             Bitmap bitmap = BitmapFactory.decodeFile(localImg.getAbsolutePath());
                             imageView.setImageBitmap(bitmap);
                             imageViewbtn.setImageBitmap(bitmap);
+                            //displayalluserimage();
                             progressDialog.dismiss();
                         }
                     })
@@ -141,5 +150,30 @@ public class profile_page extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void displayalluserimage() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("USerPost");
+
+        gridView = findViewById(R.id.gridviewforim);
+        dataList = new ArrayList<>();
+        myAdapter = new MyAdapter(dataList, this);
+        gridView.setAdapter(myAdapter);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DataClass dataClass = dataSnapshot.getValue(DataClass.class);
+                    dataList.add(dataClass);
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
