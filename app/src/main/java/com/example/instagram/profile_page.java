@@ -42,6 +42,8 @@ public class profile_page extends AppCompatActivity {
     GridView gridView;
     MyAdapter myAdapter;
 
+
+
     ProgressDialog progressDialog;
     String bio = "";
     String img = "";
@@ -50,7 +52,7 @@ public class profile_page extends AppCompatActivity {
     ImageView imageView, imageViewbtn;
     StorageReference storageReference;
 
-    ImageButton newpostbtn;
+    ImageButton newpostbtn,addnewuser;
     ArrayList imges = new ArrayList();
     ArrayList<String> imgesnames = new ArrayList();
 
@@ -74,9 +76,21 @@ public class profile_page extends AppCompatActivity {
         // Set username TextView
         textviewusername.setText(username);
         // Get user data from Firebase
-        getdata();
+        //getdata();
         //go to new post activity
         newpostbtn = findViewById(R.id.newpost);
+
+
+        addnewuser=findViewById(R.id.add_user);
+
+        addnewuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),add_user.class);
+                startActivity(i);
+            }
+        });
+
         newpostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +103,7 @@ public class profile_page extends AppCompatActivity {
         //gridview
         gridView = findViewById(R.id.gridviewforim);
         //imges.add(R.drawable.ic_launcher_background);
-        getuserpostname();
+        //getuserpostname();
 
         myAdapter = new MyAdapter(this, imges);
         gridView.setAdapter(myAdapter);

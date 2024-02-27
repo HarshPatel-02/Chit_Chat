@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+
+    android:padding="5sp">
+
+    <RelativeLayout
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:paddingBottom="20sp"
+        android:background="@drawable/grid_style">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/as_user_img"
+            android:layout_width="90sp"
+            android:layout_height="90sp"
+            android:layout_below="@id/hr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20sp"
+            android:src="@drawable/persone" />
+
+        <TextView
+            android:id="@+id/as_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/as_user_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10sp"
+            android:text="_._ajay_._443"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/as_userfullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/as_username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10sp"
+            android:text="Ajay Chandiramani"
+
+            android:scaleType="fitXY"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/as_userfullname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/grid_follow_btn_style"
+            android:paddingLeft="20sp"
+            android:paddingRight="20sp"
+            android:text="Follow"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

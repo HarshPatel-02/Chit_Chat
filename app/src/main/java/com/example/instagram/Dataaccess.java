@@ -1,25 +1,10 @@
 package com.example.instagram;
 
 public class Dataaccess {
-    String userimg,password,mob,gender,fullname,email,bio,img;
-
-    public Dataaccess(String userimg, String password, String mob, String gender, String fullname, String email, String bio) {
-        this.userimg = userimg;
-        this.password = password;
-        this.mob = mob;
-        this.gender = gender;
-        this.fullname = fullname;
-        this.email = email;
-        this.bio = bio;
+    public Dataaccess() {
     }
 
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
+    String userimg, password, mob, gender, fullname, email, bio, img, username;
 
     public String getUserimg() {
         return userimg;
@@ -77,6 +62,31 @@ public class Dataaccess {
         this.bio = bio;
     }
 
-    public Dataaccess() {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Dataaccess(String userimg, String password, String mob, String gender, String fullname, String email, String bio, String img, String username) {
+        this.userimg = userimg;
+        this.password = password;
+        this.mob = mob;
+        this.gender = gender;
+        this.fullname = fullname;
+        this.email = email;
+        this.bio = bio;
+        this.img = img;
+        this.username = username;
     }
 }
