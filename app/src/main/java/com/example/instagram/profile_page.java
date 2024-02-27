@@ -76,7 +76,7 @@ public class profile_page extends AppCompatActivity {
         // Set username TextView
         textviewusername.setText(username);
         // Get user data from Firebase
-        //getdata();
+        getdata();
         //go to new post activity
         newpostbtn = findViewById(R.id.newpost);
 
@@ -103,7 +103,7 @@ public class profile_page extends AppCompatActivity {
         //gridview
         gridView = findViewById(R.id.gridviewforim);
         //imges.add(R.drawable.ic_launcher_background);
-        //getuserpostname();
+        getuserpostname();
 
         myAdapter = new MyAdapter(this, imges);
         gridView.setAdapter(myAdapter);
