@@ -21,8 +21,13 @@
             android:name=".chatpg"
             android:exported="false" />
         <activity
-            android:name=".tempokook"
+            android:name=".secondtemp"
             android:exported="false" />
+        <activity
+            android:name=".tempokook"
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".add_user"
             android:exported="true" />

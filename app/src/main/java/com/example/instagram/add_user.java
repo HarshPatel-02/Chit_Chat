@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,13 +38,13 @@ public class add_user extends AppCompatActivity {
     my_adapter_alluser myadapter;
 
 
+    ImageButton btn;
+
     ProgressDialog progressDialog;
     ArrayList<String> username = new ArrayList();
     ArrayList<String> fullname = new ArrayList();
     ArrayList<String> imgname = new ArrayList();
     ArrayList<Bitmap> uimg = new ArrayList();
-
-    // Counter to keep track of downloaded images
     int downloadedImageCount = 0;
 
     @Override
@@ -49,10 +53,20 @@ public class add_user extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
         g1 = findViewById(R.id.as_gridview);
 
+        btn=findViewById(R.id.backbtn);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),profile_page.class);
+                startActivity(i);
+            }
+        });
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Fetching Your Data");
         progressDialog.setCanceledOnTouchOutside(false);
-        // progressDialog.show();
+        progressDialog.show();
         myadapter = new my_adapter_alluser(this, uimg, fullname, username);
         g1.setAdapter(myadapter);
 
@@ -79,6 +93,7 @@ public class add_user extends AppCompatActivity {
                     downloadImagesSequentially();
 
                 } else {
+
                     Toast.makeText(getApplicationContext(), "No data found", Toast.LENGTH_LONG).show();
                 }
             }
@@ -113,6 +128,7 @@ public class add_user extends AppCompatActivity {
                                     // Download the next image
                                     downloadImagesSequentially();
                                 }
+                                progressDialog.dismiss();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
