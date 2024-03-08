@@ -56,8 +56,10 @@
             android:layout_marginTop="20sp"
             android:background="@drawable/grid_follow_btn_style"
             android:paddingLeft="20sp"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingRight="20sp"
-            android:text="Follow"
+            android:text="View Profile"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="17sp" />

@@ -1,30 +1,45 @@
-package com.example.instagram;
+    package com.example.instagram;
 
-import androidx.appcompat.app.AppCompatActivity;
+    import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.CountDownTimer;
+    import android.content.Intent;
+    import android.os.Bundle;
+    import android.os.CountDownTimer;
 
-public class temp extends AppCompatActivity {
+    import java.io.File;
+
+    public class temp extends AppCompatActivity {
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_temp);
-        new CountDownTimer(2000,1000){
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_temp);
+            new CountDownTimer(2000,1000){
 
-            @Override
-            public void onTick(long l) {
+                @Override
+                public void onTick(long l) {
 
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            }.start();
+            File file = new File(getFilesDir(), "username.txt");
+            Intent i=new Intent(getApplicationContext(),MainActivity2.class);
+            startActivity(i);
+            if (file.exists()){
+                Intent i1=new Intent(getApplicationContext(),profile_page.class);
+                //startActivity(i);
+                //finish();
+            }else{
+                Intent i2=new Intent(getApplicationContext(),MainActivity2.class);
+                //startActivity(i);
+                //finish();
             }
 
-            @Override
-            public void onFinish() {
-                   Intent intent= new  Intent(getApplicationContext(),MainActivity2.class);
-                    startActivity(intent);
-            }
-        }.start();
+
+        }
     }
-}

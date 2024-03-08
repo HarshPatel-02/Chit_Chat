@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,6 +32,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -152,7 +155,11 @@ public class register_page extends AppCompatActivity {
                     progressdialog.setTitle("Creating account");
                     progressdialog.setCanceledOnTouchOutside(false);
                     progressdialog.show();
-                    insertdatat();
+                    try {
+                        insertdatat();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -178,7 +185,7 @@ public class register_page extends AppCompatActivity {
     }
 
     //inseert data
-    private void insertdatat() {
+    private void insertdatat() throws IOException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy_mm_dd_HH_mm_ss", Locale.CANADA);
         Date dt = new Date();
         String filenm = format.format(dt);
@@ -203,7 +210,13 @@ public class register_page extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference("images/" + filenm+".jpeg");
         if (imgflg == false) {
-            storageReference.putFile(imgpath)
+            Bitmap bmp=MediaStore.Images.Media.getBitmap(getContentResolver(),imgpath);
+            ByteArrayOutputStream baos=new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG,10,baos);
+            byte[] data=baos.toByteArray();
+
+
+            storageReference.putBytes(data)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

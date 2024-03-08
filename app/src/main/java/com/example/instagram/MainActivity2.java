@@ -19,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class MainActivity2 extends AppCompatActivity {
 
     Button b1, b2;
@@ -74,7 +78,24 @@ public class MainActivity2 extends AppCompatActivity {
                                                     SharedPreferences.Editor editor = pref.edit();
                                                     editor.putString("usernm", unm.getText().toString());
                                                     editor.apply();
+                                                    FileOutputStream fos = null;
+                                                    try {
+                                                        fos = openFileOutput("username.txt", Context.MODE_PRIVATE);
+                                                    } catch (FileNotFoundException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                    try {
+                                                        fos.write(username.getBytes());
+                                                    } catch (IOException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+                                                    try {
+                                                        fos.close();
+                                                    } catch (IOException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
                                                     progressdialog.dismiss();
+
                                                     Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
                                                     Intent i = new Intent(getApplicationContext(), profile_page.class);
                                                     startActivity(i);

@@ -1,7 +1,9 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,6 @@ public class my_adapter_alluser extends BaseAdapter {
         this.username = username;
         notifyDataSetChanged(); // Notify adapter of data change
     }
-
     @Override
     public int getCount() {
         return fullname.size();
@@ -62,6 +63,20 @@ public class my_adapter_alluser extends BaseAdapter {
         t1.setText(username.get(i));
         t2.setText(fullname.get(i));
 
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MyAdapter", "Grid item clicked at position: " + fullname.get(i));
+                Intent intent=new Intent(context,Other_User_profile.class);
+                intent.putExtra("username", username.get(i));
+                context.startActivity(intent);
+
+
+
+            }
+        });
 
         return view;
     }

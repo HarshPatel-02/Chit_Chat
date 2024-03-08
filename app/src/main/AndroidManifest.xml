@@ -14,16 +14,23 @@
         android:theme="@style/Theme.Instagram"
         tools:targetApi="31">
         <activity
+            android:name=".Home_page"
+            android:exported="false" />
+        <activity
+            android:name=".try_one"
+            android:exported="false" />
+        <activity
+            android:name=".Other_User_profile"
+            android:exported="false" />
+        <activity
             android:name=".secondtemp"
             android:exported="false" />
         <activity
             android:name=".tempokook"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".add_user"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".New_post"
             android:exported="false" />
