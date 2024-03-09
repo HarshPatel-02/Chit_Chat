@@ -50,6 +50,8 @@ public class my_adapter_alluser extends BaseAdapter {
         return 0;
     }
 
+
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
