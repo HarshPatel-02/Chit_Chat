@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,12 +37,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+
 public class profile_page extends AppCompatActivity {
 
+    int fulltemp=0;
     GridView gridView;
     MyAdapter myAdapter;
 
 
+
+    ImageButton homepagebtn;
 
     int fc = 0;
 
@@ -62,6 +68,8 @@ public class profile_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+
+        homepagebtn=findViewById(R.id.homebtn);
 
         buddy=findViewById(R.id.p_buddy);
         progressDialog = new ProgressDialog(this);
@@ -115,6 +123,13 @@ public class profile_page extends AppCompatActivity {
         gridView.setAdapter(myAdapter);
         //Toast.makeText(getApplicationContext(), (CharSequence) imgesnames.get(0),Toast.LENGTH_SHORT);
 
+        homepagebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),Home_page.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void getfollowcount() {
@@ -182,6 +197,7 @@ public class profile_page extends AppCompatActivity {
             memories.setText("Memories"+"\n"+imges.size());
             Toast.makeText(getApplicationContext(), "from local",Toast.LENGTH_SHORT).show();
             myAdapter.notifyDataSetChanged();
+            fulltemp++;
             dismismydialog();
 
         }
@@ -211,12 +227,15 @@ public class profile_page extends AppCompatActivity {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            fulltemp++;
             dismismydialog();
         }
     }
 
     private void dismismydialog() {
-        progressDialog.dismiss();
+        if (fulltemp==2) {
+            progressDialog.dismiss();
+        }
     }
 
     private void getuserpostname(){
@@ -296,6 +315,7 @@ public class profile_page extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "from local",Toast.LENGTH_SHORT).show();
 
+            fulltemp++;
           //  progressDialog.dismiss();
 
         } else {
@@ -315,6 +335,8 @@ public class profile_page extends AppCompatActivity {
                                 saveImageToLocalStorage(bitmap, imageUrl);
                                 //
                                 // progressDialog.dismiss();
+
+                                fulltemp++;
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

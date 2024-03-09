@@ -4,7 +4,7 @@ public class Dataaccess {
     public Dataaccess() {
     }
 
-    String userimg, password, mob, gender, fullname, email, bio, img, username;
+    String userimg, password, mob, gender, fullname, email, bio, img, username, userId;
 
     public String getUserimg() {
         return userimg;
@@ -78,7 +78,15 @@ public class Dataaccess {
         this.username = username;
     }
 
-    public Dataaccess(String userimg, String password, String mob, String gender, String fullname, String email, String bio, String img, String username) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Dataaccess(String userimg, String password, String mob, String gender, String fullname, String email, String bio, String img, String username, String userId) {
         this.userimg = userimg;
         this.password = password;
         this.mob = mob;
@@ -88,5 +96,6 @@ public class Dataaccess {
         this.bio = bio;
         this.img = img;
         this.username = username;
+        this.userId = userId;
     }
 }

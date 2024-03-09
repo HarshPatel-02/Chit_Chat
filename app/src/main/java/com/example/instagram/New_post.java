@@ -142,7 +142,7 @@ public class New_post extends AppCompatActivity {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference("USerPost/" + filenm+".jpeg");
         Bitmap bmp=MediaStore.Images.Media.getBitmap(getContentResolver(),imgpath);
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG,10,baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG,20,baos);
         byte[] data1=baos.toByteArray();
 
 

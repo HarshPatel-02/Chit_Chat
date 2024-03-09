@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="5sp"
+        android:id="@+id/userimagehomepage"
+        android:src="@drawable/p1" />
+    <TextView
+        android:id="@+id/alluserpage_userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="_._ajay_._44"
+        android:layout_toRightOf="@id/userimagehomepage"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="10sp"/>
+
+    <ImageButton
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:src="@drawable/dotsmenu"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="30sp"/>
+
+
+    <ImageView
+        android:id="@+id/userpostimage"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_below="@+id/userimagehomepage"
+        android:layout_marginTop="10sp"
+        android:src="@drawable/time"
+        android:scaleType="fitXY"/>
+
+    <ImageButton
+        android:id="@+id/likebtn"
+        android:layout_width="35sp"
+        android:layout_height="35sp"
+        android:src="@drawable/heart"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/userpostimage"
+        android:scaleType="fitXY"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="20sp"/>
+    <ImageButton
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:src="@drawable/comment"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/userpostimage"
+        android:layout_toRightOf="@id/likebtn"
+        android:scaleType="fitXY"
+        android:layout_marginTop="5sp"
+        android:layout_marginLeft="40sp"/>
+
+
+</RelativeLayout>

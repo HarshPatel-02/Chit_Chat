@@ -108,8 +108,6 @@ public class add_user extends AppCompatActivity {
 
                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                         Dataaccess data = snapshot1.getValue(Dataaccess.class);
-                        DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference("Users");
-                        Query query=databaseReference.orderByChild("username").equalTo(ownusername);
 
                         imgname.add(data.getUserimg());
                         username.add(data.getUsername());
@@ -117,7 +115,7 @@ public class add_user extends AppCompatActivity {
                     }
 
                     Toast.makeText(getApplicationContext(), TextUtils.join("\n", imgname), Toast.LENGTH_LONG).show();
-                    // Start downloading images sequentially
+                    // Start downloading images s   equentially
                     downloadImagesSequentially();
 
                    // progressDialog.dismiss();
