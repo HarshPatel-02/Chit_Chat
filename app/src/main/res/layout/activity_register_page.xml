@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -226,7 +226,7 @@
             android:background="@drawable/edittext_style"
             android:drawableLeft="@drawable/mobile"
             android:drawablePadding="10sp"
-            android:hint="Enter Your Full name"
+            android:hint="Enter Your Mobile Number"
             android:padding="10sp"
             android:inputType="phone"
             android:maxLength="10"
