@@ -44,8 +44,15 @@ public class UserPostData extends BaseAdapter {
         view=layoutInflater.inflate(R.layout.all_user_post,null);
         ImageView imageView=(ImageView) view.findViewById(R.id.userpostimage);
         TextView txt=(TextView) view.findViewById(R.id.alluserpage_userid);
-        imageView.setImageBitmap(img.get(i));
-        txt.setText(username.get(i));
+
+        // Check if index i is within the bounds of the lists
+        if (i < username.size() && i < img.size()) {
+            imageView.setImageBitmap(img.get(i));
+            txt.setText(username.get(i));
+        } else {
+            // Handle the case when index i is out of bounds
+            // For example, set default values or handle the view accordingly
+        }
 
         return view;
 

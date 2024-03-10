@@ -6,10 +6,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 
 public class Home_page extends AppCompatActivity {
 
-
     ProgressDialog progressDialog;
     RecyclerView l1;
     ListView l2;
@@ -45,29 +43,24 @@ public class Home_page extends AppCompatActivity {
     ArrayList<Bitmap> userpost = new ArrayList<>();
     ArrayList<String> postusername = new ArrayList<>();
 
-
-    ArrayList<String> followusername=new ArrayList<>();
-
-
-
-    ArrayList<String> postname=new ArrayList<>();
+    ArrayList<String> followusername = new ArrayList<>();
+    ArrayList<String> postname = new ArrayList<>();
 
     String ownusername;
-
     UserPostData userpostdata1;
+    int downloadimgcount = 0;
 
-    int downloadimgcount=0;
+    ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         progressDialog = new ProgressDialog(this);
-
+        loadingDialog = new ProgressDialog(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
         ownusername = sharedPreferences.getString("usernm", "n");
-
 
         l1 = findViewById(R.id.homepage_story_listview);
         l1.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -88,23 +81,17 @@ public class Home_page extends AppCompatActivity {
         StoryDataAdapter storydatavar = new StoryDataAdapter(this, userimages, username);
         l1.setAdapter(storydatavar);
 
-
-     //   userpost.add(BitmapFactory.decodeResource(getResources(), R.drawable.time));
-       // postusername.add("ajay");
         userpostdata1 = new UserPostData(this, postusername, userpost);
         l2.setAdapter(userpostdata1);
 
-
         getusernamedata();
-
-
     }
 
     private void getusernamedata() {
-
         progressDialog.setMessage("Fetching Your Data");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         Query query = databaseReference.orderByChild("username").equalTo(ownusername);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -119,16 +106,17 @@ public class Home_page extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
                                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                    Dataaccess dataaccess=snapshot1.getValue(Dataaccess.class);
+                                    Dataaccess dataaccess = snapshot1.getValue(Dataaccess.class);
                                     followusername.add(dataaccess.getUsername());
                                 }
+
+                                getpostdata();
                             }
-                            getpostdata();
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            progressDialog.dismiss();
                         }
                     });
                 }
@@ -136,10 +124,9 @@ public class Home_page extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                progressDialog.dismiss();
             }
         });
-
     }
 
     private void getpostdata() {
@@ -154,103 +141,101 @@ public class Home_page extends AppCompatActivity {
                             Dataaccess dataaccess = snapshot1.getValue(Dataaccess.class);
                             String postUserId = dataaccess.getUserId();
                             String postImg = dataaccess.getImg();
-                            // Add post username and post image URL to the lists
                             postusername.add(postUserId);
                             postname.add(postImg);
-
-                            // Download and add the image to the userpost list
-                            downloadimages();
                         }
+                        downloadimages();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    // Handle cancellation
+                    progressDialog.dismiss();
                 }
             });
         }
     }
 
     private void downloadimages() {
-        if (downloadimgcount<postname.size()){
-            String im=postname.get(downloadimgcount);
-            File localimage=new File(getFilesDir(),im);
-            if (localimage.exists()){
-                //jo file hoy to locak storage ma
-                Bitmap bitmap=BitmapFactory.decodeFile(localimage.getAbsolutePath());
+        int batchSize = 5; // Number of images to download at once
+        int endIndex = Math.min(downloadimgcount + batchSize, postname.size());
+
+        for (int i = downloadimgcount; i < endIndex; i++) {
+            String im = postname.get(i);
+            File localimage = new File(getFilesDir(), im);
+            if (localimage.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(localimage.getAbsolutePath());
                 userpost.add(bitmap);
                 downloadimgcount++;
-                if (downloadimgcount == postname.size()) {
-                    // Notify adapter and dismiss progress dialog
-                    userpostdata1.notifyDataSetChanged();
-                    progressDialog.dismiss();
-                } else {
-                    // Download next image
-                    downloadimages();
-                }
-
-            }
-            else{
-                StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("USerPost/"+im);
+            } else {
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("USerPost/" + im);
                 try {
-                    localimage=File.createTempFile("temppost",".jpeg");
+                    localimage = File.createTempFile("temppost", ".jpeg");
                     File finalLocalImg = localimage;
                     storageReference.getFile(localimage)
                             .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    Bitmap bitmap=BitmapFactory.decodeFile(finalLocalImg.getAbsolutePath());
+                                    Bitmap bitmap = BitmapFactory.decodeFile(finalLocalImg.getAbsolutePath());
                                     userpost.add(bitmap);
                                     downloadimgcount++;
                                     saveImageToLocalStorage(bitmap, im);
                                     if (downloadimgcount == postname.size()) {
-                                        // Notify adapter and dismiss progress dialog
                                         userpostdata1.notifyDataSetChanged();
                                         progressDialog.dismiss();
                                     } else {
-                                        // Download next image
                                         downloadimages();
                                     }
-
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
+                                    progressDialog.dismiss();
                                 }
                             });
-
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
-
             }
         }
 
+        userpostdata1.notifyDataSetChanged();
 
+        if (downloadimgcount < postname.size()) {
+            showLoadingAnimation();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    downloadimages();
+                }
+            }, 2000);
+        } else {
+            dismissLoadingAnimation();
+        }
     }
 
     private void saveImageToLocalStorage(Bitmap bitmap, String im) {
         try {
-            // Get the directory where the image file will be stored
             File directory = getDir("images", Context.MODE_PRIVATE);
-
-            // Create a file within the directory
             File imageFile = new File(directory, im);
-
-            // Create a FileOutputStream to write the bitmap data to the file
             FileOutputStream fos = new FileOutputStream(imageFile);
-
-            // Compress and write the bitmap data to the FileOutputStream
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-
-            // Close the FileOutputStream
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void showLoadingAnimation() {
+        loadingDialog.setMessage("Loading more images...");
+        loadingDialog.setCancelable(false);
+        //loadingDialog.show();
+    }
+
+    private void dismissLoadingAnimation() {
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
         }
     }
 }

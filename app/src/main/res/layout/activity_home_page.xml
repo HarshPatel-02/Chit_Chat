@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Home_page">
 
-
+    <!-- Add ProgressBar -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homepage_story_listview"
@@ -21,5 +21,13 @@
         android:layout_marginTop="20sp"
         android:layout_height="wrap_content" />
 
-
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/homepage_post_listview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone" />
 </RelativeLayout>
