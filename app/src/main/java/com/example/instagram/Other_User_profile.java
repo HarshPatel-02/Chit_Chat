@@ -51,23 +51,16 @@ public class Other_User_profile extends AppCompatActivity {
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey();
 
-                    // Get the Follow node reference for the current user
                     DatabaseReference followRef = databaseReference.child(userId).child("Follow");
 
-                    // Query to check if the username exists in the Follow node
                     Query usernameQuery = followRef.orderByChild("username").equalTo(username);
 
-                    // Attach ValueEventListener to the query
                     usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            // Check if the username exists in the Follow node
                             if (snapshot.exists()) {
-                                // Username exists in the Follow node, set the button text accordingly
                                 followbtn.setText("Following");
                             } else {
-                                // Username does not exist in the Follow node
-                                // Do nothing or handle the case accordingly
                                 gotofollow();
                             }
                         }

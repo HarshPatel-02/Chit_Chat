@@ -1,61 +1,173 @@
 package com.example.instagram;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class UserPostData extends BaseAdapter {
+public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> {
 
-    Context context;
-    ArrayList<String> username=new ArrayList<>();
-    ArrayList<Bitmap> img=new ArrayList<>();
+    private String usernametolike;
 
-    public UserPostData(Context context, ArrayList<String> username, ArrayList<Bitmap> img) {
+    private Context context;
+    private ArrayList<String> username = new ArrayList<>();
+    private ArrayList<Bitmap> img = new ArrayList<>();;
+    private ArrayList<Boolean> isliked = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
+    private String ownusername;
+
+    public UserPostData(Context context, ArrayList<String> username, ArrayList<Bitmap> img,ArrayList<Boolean> isliked) {
         this.context = context;
         this.username = username;
         this.img = img;
+        this.isliked=isliked;
+        sharedPreferences = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        ownusername = sharedPreferences.getString("usernm", "n");
+
     }
 
+
+    @NonNull
     @Override
-    public int getCount() {
-        return username.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.all_user_post, parent, false);
+        return new ViewHolder(view);
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
+    @SuppressLint("ClickableViewAccessibility")
 
     @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Bind data to ViewHolder
+        Bitmap image = img.get(position);
+        String name = username.get(position);
+        boolean isLiked = isliked.get(position); // Get liked state for this item
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view=layoutInflater.inflate(R.layout.all_user_post,null);
-        ImageView imageView=(ImageView) view.findViewById(R.id.userpostimage);
-        TextView txt=(TextView) view.findViewById(R.id.alluserpage_userid);
+        holder.userpost.setImageBitmap(image);
+        holder.username.setText(name);
 
-        // Check if index i is within the bounds of the lists
-        if (i < username.size() && i < img.size()) {
-            imageView.setImageBitmap(img.get(i));
-            txt.setText(username.get(i));
+        // Set appropriate like state
+        if (isLiked) {
+            holder.borderheart.setImageResource(R.drawable.red_heart);
+            // holder.centerhraet.setVisibility(View.VISIBLE);
         } else {
-            // Handle the case when index i is out of bounds
-            // For example, set default values or handle the view accordingly
+            holder.borderheart.setImageResource(R.drawable.heart_border);
+            // holder.centerhraet.setVisibility(View.INVISIBLE);
         }
 
-        return view;
+        GestureDetector gestureDetector = new GestureDetector(holder.itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+            Animation zoomInAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.like_animation_zomin);
+            Animation zoomOutAnim = AnimationUtils.loadAnimation(context.getApplicationContext(), R.anim.like_animation_zomout);
 
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                // Get the adapter position of the ViewHolder
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    // Toggle like state
+                    isliked.set(adapterPosition, true);
+                    notifyItemChanged(adapterPosition);
+
+                    holder.borderheart.startAnimation(zoomInAnim);
+                    holder.borderheart.setImageResource(R.drawable.red_heart);
+
+                    holder.centerhraet.startAnimation(zoomOutAnim);
+                    usernametolike= name;
+                    updatetodatabase();
+                }
+                return true;
+            }
+        });
+
+        holder.userpost.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return gestureDetector.onTouchEvent(motionEvent);
+            }
+        });
+        holder.borderheart.setOnClickListener(new View.OnClickListener() {
+            int pos=holder.getAdapterPosition();
+            @Override
+            public void onClick(View view) {
+                holder.borderheart.setImageResource(R.drawable.heart_border);
+                isliked.set(pos, false);
+
+            }
+        });
+    }
+
+
+    public int getItemCount() {
+        return img.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView userpost, n;
+        TextView username;
+
+        ImageView borderheart,centerhraet;
+
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            userpost = itemView.findViewById(R.id.userpostimage);
+            username = itemView.findViewById(R.id.alluserpage_userid);
+            borderheart = itemView.findViewById(R.id.likebtn);
+            centerhraet=itemView.findViewById(R.id.white_heart);
+            // n = itemView.findViewById(R.id.tempoooooo);
+        }
+    }
+
+    private void updatetodatabase() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        Query followQuery = databaseReference.orderByChild("userId").equalTo(usernametolike);
+        followQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    String key=dataSnapshot.getKey();
+                    DatabaseReference followRef = databaseReference.child(key).child("userlike");
+
+                    DatabaseReference likeope = followRef.push();
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("username", ownusername);
+                    likeope.setValue(data);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Toast.makeText(context.getApplicationContext(), usernametolike,Toast.LENGTH_SHORT).show();
 
     }
 }
