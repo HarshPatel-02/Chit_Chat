@@ -32,20 +32,25 @@ import java.util.Map;
 
 public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> {
 
+    boolean userExists=false;
     private String usernametolike;
 
+
+    String userposttolike;
     private Context context;
     private ArrayList<String> username = new ArrayList<>();
     private ArrayList<Bitmap> img = new ArrayList<>();;
     private ArrayList<Boolean> isliked = new ArrayList<>();
+    private ArrayList<String> postname = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     private String ownusername;
 
-    public UserPostData(Context context, ArrayList<String> username, ArrayList<Bitmap> img,ArrayList<Boolean> isliked) {
+    public UserPostData(Context context, ArrayList<String> username, ArrayList<Bitmap> img,ArrayList<Boolean> isliked,ArrayList<String> postname) {
         this.context = context;
         this.username = username;
         this.img = img;
         this.isliked=isliked;
+        this.postname=postname;
         sharedPreferences = context.getSharedPreferences("user_data", Context.MODE_PRIVATE);
         ownusername = sharedPreferences.getString("usernm", "n");
 
@@ -68,6 +73,7 @@ public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> 
         String name = username.get(position);
         boolean isLiked = isliked.get(position); // Get liked state for this item
 
+        userposttolike=postname.get(position);
         holder.userpost.setImageBitmap(image);
         holder.username.setText(name);
 
@@ -98,6 +104,7 @@ public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> 
 
                     holder.centerhraet.startAnimation(zoomOutAnim);
                     usernametolike= name;
+                    //userposttolike=
                     updatetodatabase();
                 }
                 return true;
@@ -144,8 +151,48 @@ public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> 
     }
 
     private void updatetodatabase() {
+        Toast.makeText(context.getApplicationContext(), userposttolike.toString(),Toast.LENGTH_SHORT).show();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
-        Query followQuery = databaseReference.orderByChild("userId").equalTo(usernametolike);
+        Query followQuery = databaseReference.orderByChild("img").equalTo(userposttolike);
+        followQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final boolean[] userExists = {false};
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String key = dataSnapshot.getKey();
+                    DatabaseReference followRef = databaseReference.child(key).child("userlike");
+                    Query usernameQuery = followRef.orderByChild("username").equalTo(ownusername);
+                    usernameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+
+                            } else {
+                                gotolike();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle onCancelled if needed
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        // This toast will not show the correct username, move it inside onDataChange if needed.
+        Toast.makeText(context.getApplicationContext(), usernametolike, Toast.LENGTH_SHORT).show();
+    }
+
+    private void gotolike() {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        Query followQuery = databaseReference.orderByChild("img").equalTo(userposttolike);
         followQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -167,7 +214,5 @@ public class UserPostData extends RecyclerView.Adapter<UserPostData.ViewHolder> 
 
             }
         });
-        Toast.makeText(context.getApplicationContext(), usernametolike,Toast.LENGTH_SHORT).show();
-
     }
 }

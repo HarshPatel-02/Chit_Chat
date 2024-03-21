@@ -101,7 +101,8 @@ public class register_page extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please Enter All Detail", Toast.LENGTH_LONG).show();
 
 
-                } else {
+                }
+                else {
                         //checking if username is availble or not
                     DatabaseReference db=FirebaseDatabase.getInstance().getReference();
                     db.child("Users").orderByChild("username").equalTo(usernm.getText().toString())

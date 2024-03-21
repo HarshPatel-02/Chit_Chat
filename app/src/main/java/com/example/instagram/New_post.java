@@ -50,10 +50,15 @@ public class New_post extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+
+
+
         r1 = findViewById(R.id.newp_btn_layout);
         r2 = findViewById(R.id.postuploadlayout);
         r2.setVisibility(View.GONE);
@@ -131,9 +136,14 @@ public class New_post extends AppCompatActivity {
         }
 
 
+        String var1="aj";
+        String var2="20";
+
 
 
         Map<String, Object> data = new HashMap<>();
+        data.put("unm",var1);
+        data.put("age",var2);
         data.put("userId", username);
         data.put("img", filenm+".jpeg");
         data.put("time", formateddata);

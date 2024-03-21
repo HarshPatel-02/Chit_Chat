@@ -43,6 +43,9 @@ public class Home_page extends AppCompatActivity {
 
 
     boolean lastrec_stop_scrol=true;
+
+    ArrayList<String> usernameswholike = new ArrayList<>();
+
     private String lastItemId; // Declare a variable to store the key of the last item fetched
 
     private ProgressBar loadingIndicator;
@@ -113,7 +116,7 @@ public class Home_page extends AppCompatActivity {
         StoryDataAdapter storydatavar = new StoryDataAdapter(this, userimages, username);
         l1.setAdapter(storydatavar);
 
-        userpostdata1 = new UserPostData(this, postusername, userpost,isliked);
+        userpostdata1 = new UserPostData(this, postusername, userpost,isliked,postname);
         doa = new DataEmployee();
         recyclerView.setAdapter(userpostdata1);
 
@@ -218,6 +221,7 @@ public class Home_page extends AppCompatActivity {
 
                 totalImagesToDownload = 0; // Reset total number of images to download
 
+
                 if (snapshot.exists()) {
                     // Iterate through all the items in the snapshot to find the last key
                     for (DataSnapshot snapshot1 : snapshot.getChildren()) {
@@ -235,7 +239,34 @@ public class Home_page extends AppCompatActivity {
 
                         // Update last item id with the key of the current item
                         lastItemId = snapshot1.getKey();
+
                     }
+                 /*   DatabaseReference likecount=FirebaseDatabase.getInstance().getReference().child("Posts");
+                    Query query1=likecount.limitToFirst(3);
+                    query1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                                DataSnapshot uslikesnap=dataSnapshot.child("userlike");
+                                if (uslikesnap.exists()){
+                                    Dataaccess dataaccess=uslikesnap.child("username").getValue(Dataaccess.class);
+                                    String umn=dataaccess.getUsername();
+                                    Toast.makeText(getApplicationContext(),umn,Toast.LENGTH_SHORT).show();
+                                    if (umn.equals(ownusername)){
+                                        usernameswholike.add(umn);
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });*/
+                    Log.d("joyokok",usernameswholike.toString());
 
                     // Now lastItemId should hold the key of the last item fetched
                     downloadimages();
