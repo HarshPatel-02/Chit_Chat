@@ -266,7 +266,7 @@ public class Home_page extends AppCompatActivity {
 
                         }
                     });*/
-                    Log.d("joyokok",usernameswholike.toString());
+                    //Log.d("joyokok",usernameswholike.toString());
 
                     // Now lastItemId should hold the key of the last item fetched
                     downloadimages();
@@ -297,7 +297,7 @@ public class Home_page extends AppCompatActivity {
                     int fetchedRecordsCount = (int) snapshot.getChildrenCount();
 
                     if (fetchedRecordsCount < 1) {
-                        Log.d("getAdditionalPostData", "Reached the end of records");
+                        //Log.d("getAdditionalPostData", "Reached the end of records");
                         lastrec_stop_scrol = false;
                         Toast.makeText(getApplicationContext(), "Reached the end of records", Toast.LENGTH_SHORT).show();
                         loadingIndicator.setVisibility(View.GONE);
@@ -331,10 +331,10 @@ public class Home_page extends AppCompatActivity {
                     }
 
                     // Log the updated ArrayList contents
-                    Log.d("PostData", "Postname ArrayList Size: " + postname.size());
-                    Log.d("PostData", "Postname ArrayList Contents: " + postname.toString());
-                    Log.d("PostData", "Postusername ArrayList Size: " + postusername.size());
-                    Log.d("PostData", "Postusername ArrayList Contents: " + postusername.toString());
+                    //Log.d("PostData", "Postname ArrayList Size: " + postname.size());
+                    //Log.d("PostData", "Postname ArrayList Contents: " + postname.toString());
+                    //Log.d("PostData", "Postusername ArrayList Size: " + postusername.size());
+                    //Log.d("PostData", "Postusername ArrayList Contents: " + postusername.toString());
 
                     downloadimages();
                 } else {
@@ -382,15 +382,24 @@ public class Home_page extends AppCompatActivity {
 
     private void downloadimages() {
         String im = postname.get(downloadimgcount);
-        Log.d("after getin name: ", im);
+        //Log.d("after getin name: ", im);
         //Toast.makeText(getApplicationContext(), "testing" + im, Toast.LENGTH_SHORT).show();
-        File localimage = new File(getFilesDir(), im);
-        if (localimage.exists()) {
+        File localimage = null;
+        if (im != null) {
+            // Create File object
+            localimage = new File(getFilesDir(), im);
+        } else {
+            Log.e("Error", "Filename is null");
+        }
+
+        // Check if the file exists locally
+        if (localimage != null && localimage.exists()) {
             Bitmap bitmap = BitmapFactory.decodeFile(localimage.getAbsolutePath());
             userpost.add(bitmap);
             downloadimgcount++;
             checkAndUpdateUI();
         } else {
+            // File does not exist locally, download it from the database
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("USerPost/" + im);
             try {
                 localimage = File.createTempFile("temppost", ".jpeg");
@@ -422,7 +431,7 @@ public class Home_page extends AppCompatActivity {
 
     private void checkAndUpdateUI() {
         if (downloadimgcount == totalImagesToDownload) {
-            Log.d("temp", "aave che");
+            //Log.d("temp", "aave che");
             // All images have been downloaded
             userpostdata1.notifyDataSetChanged();
             progressDialog.dismiss();
