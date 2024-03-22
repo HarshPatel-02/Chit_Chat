@@ -54,32 +54,32 @@ public class my_adapter_alluser extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view=layoutInflater.inflate(R.layout.grid_item_alluser,null);
+            LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view=layoutInflater.inflate(R.layout.grid_item_alluser,null);
 
 
-        ImageView ing=(ImageView)view.findViewById(R.id.as_user_img);
-        TextView t1=(TextView)view.findViewById(R.id.as_username);
-        TextView t2=(TextView)view.findViewById(R.id.as_userfullname);
-        ing.setImageBitmap(userimg.get(i));
-        t1.setText(username.get(i));
-        t2.setText(fullname.get(i));
-
-
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MyAdapter", "Grid item clicked at position: " + fullname.get(i));
-                Intent intent=new Intent(context,Other_User_profile.class);
-                intent.putExtra("username", username.get(i));
-                context.startActivity(intent);
+            ImageView ing=(ImageView)view.findViewById(R.id.as_user_img);
+            TextView t1=(TextView)view.findViewById(R.id.as_username);
+            TextView t2=(TextView)view.findViewById(R.id.as_userfullname);
+            ing.setImageBitmap(userimg.get(i));
+            t1.setText(username.get(i));
+            t2.setText(fullname.get(i));
 
 
 
-            }
-        });
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("MyAdapter", "Grid item clicked at position: " + fullname.get(i));
+                    Intent intent=new Intent(context,Other_User_profile.class);
+                    intent.putExtra("username", username.get(i));
+                    context.startActivity(intent);
 
-        return view;
-    }
+
+
+                }
+            });
+
+            return view;
+        }
 }
