@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/username_chat"
         android:layout_marginLeft="10sp"
+        android:layout_marginBottom="5sp"
         android:text="hii how are you this is last mesage"
         android:textColor="@color/white"
         android:textSize="18sp"/>
@@ -40,7 +41,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5sp"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="10sp"
         android:background="#ffffff"
         android:layout_below="@id/login_logo"/>
 

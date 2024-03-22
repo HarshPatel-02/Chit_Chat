@@ -11,11 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class Chat_page_data extends BaseAdapter {
 
+    private byte[] userimatopass;
     private Context context;
     private ArrayList<Bitmap> mImages;
     private ArrayList<String> mNames;
@@ -57,6 +60,19 @@ public class Chat_page_data extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String usertochat=mNames.get(i);
+                Bitmap bitmap = mImages.get(i);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                userimatopass = stream.toByteArray();
+
+                //Toast.makeText(context.getApplicationContext(), mNames.get(i),Toast.LENGTH_SHORT).show();
+
+                Intent intent=new Intent(context.getApplicationContext(),chattry.class);
+                intent.putExtra("usertochat",usertochat);
+                intent.putExtra("image",userimatopass);
+                context.startActivity(intent);
 
 
 
@@ -66,6 +82,7 @@ public class Chat_page_data extends BaseAdapter {
         });
 
         return view;
+
 
     }
 }
