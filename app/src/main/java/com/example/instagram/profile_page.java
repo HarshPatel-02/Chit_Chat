@@ -46,6 +46,7 @@ public class profile_page extends AppCompatActivity {
     MyAdapter myAdapter;
 
 
+    ImageButton temp_btn;
 
     ImageButton homepagebtn;
 
@@ -69,6 +70,7 @@ public class profile_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        temp_btn=findViewById(R.id.chatbtn);
         homepagebtn=findViewById(R.id.homebtn);
 
         buddy=findViewById(R.id.p_buddy);
@@ -97,6 +99,15 @@ public class profile_page extends AppCompatActivity {
 
         getfollowcount();
 
+
+
+        temp_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), dis_user.class);
+                startActivity(i);
+            }
+        });
         addnewuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
