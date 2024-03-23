@@ -33,7 +33,7 @@
         android:layout_below="@id/username_chat"
         android:layout_marginLeft="10sp"
         android:layout_marginBottom="5sp"
-        android:text="hii how are you this is last mesage"
+        android:text="hii how are you this is last message"
         android:textColor="@color/white"
         android:textSize="18sp"/>
 
