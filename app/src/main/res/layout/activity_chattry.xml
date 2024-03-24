@@ -13,13 +13,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#42abda"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_logochat"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
+            android:layout_width="45sp"
+            android:layout_height="45sp"
             android:layout_marginLeft="5sp"
             android:layout_marginTop="10sp"
             android:src="@drawable/persone" />
@@ -44,7 +43,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageList"
         android:layout_width="match_parent"
-        android:background="#e6e6e6"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="8dp" />
@@ -53,21 +51,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:background="@drawable/btn_style_editpro"
         android:padding="8dp">
 
         <EditText
             android:id="@+id/messageInputField"
             android:layout_width="0dp"
             android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            android:layout_marginRight="5sp"
             android:textColorHint="@color/white"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Type a message" />
 
-        <Button
+        <ImageButton
             android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40sp"
+            android:src="@drawable/sendbtn"
+
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_height="40dp"
             android:text="Send" />
     </LinearLayout>
 </LinearLayout>

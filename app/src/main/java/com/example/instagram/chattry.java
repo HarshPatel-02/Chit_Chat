@@ -9,11 +9,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,18 +34,22 @@ import java.util.List;
 public class chattry extends AppCompatActivity {
     TextView t1;
     String receiverid,senderid;
+    Bitmap bitmap;
 
+    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer1;
     private String sender = "";
     ImageView img;
     String sender_room,receiver_room;
 
     DatabaseReference databaseReference;
     MessageAdapter messageAdapter;
-    Button sendbtn;
+    ImageButton sendbtn;
     EditText editText;
     String msg;
 
     ArrayList<String> mchat = new ArrayList<>();
+    ArrayList<String> chatusername = new ArrayList<>();
 
     RecyclerView recyclerView;
 
@@ -52,6 +58,9 @@ public class chattry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chattry);
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.send_sound);
+        mediaPlayer1 = MediaPlayer.create(this, R.raw.receive_sound);
+
         recyclerView=findViewById(R.id.messageList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
@@ -59,7 +68,7 @@ public class chattry extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         displayusername_image();
-        loaddata(senderid,receiverid,msg);
+        loaddata(senderid,receiverid,msg,bitmap);
 
 
 
@@ -82,7 +91,7 @@ public class chattry extends AppCompatActivity {
 
     }
 
-    private void loaddata(String senderid, String receiverid, String msg) {
+    private void loaddata(String senderid, String receiverid, String msg,Bitmap bitmap) {
         Toast.makeText(getApplicationContext(), "method called", Toast.LENGTH_SHORT).show();
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
 
@@ -90,6 +99,7 @@ public class chattry extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mchat.clear();
+                chatusername.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     sender = dataSnapshot.child("sender").getValue(String.class);
                     String receiver = dataSnapshot.child("receiver").getValue(String.class);
@@ -100,14 +110,16 @@ public class chattry extends AppCompatActivity {
                         if ((receiver.equals(receiverid) && sender.equals(senderid)) ||
                                 (receiver.equals(senderid) && sender.equals(receiverid))) {
                             mchat.add(message);
+                            chatusername.add(sender);
                         }
                     }
                 }
                 Log.d("msgokokok", mchat.toString());
 
                 // After updating mchat and sender, create and set adapter
-                messageAdapter = new MessageAdapter(getApplicationContext(), mchat, sender);
+                messageAdapter = new MessageAdapter(getApplicationContext(), mchat, chatusername,bitmap);
                 recyclerView.setAdapter(messageAdapter);
+                //mediaPlayer1.start();
             }
 
             @Override
@@ -128,6 +140,8 @@ public class chattry extends AppCompatActivity {
         hashMap.put("messsge",msg);
         reference.child("Chats").push().setValue(hashMap);
 
+        mediaPlayer.start();
+
 
     }
 
@@ -144,7 +158,7 @@ public class chattry extends AppCompatActivity {
         t1.setText(receiverid);
 
         byte[] byteArray = getIntent().getByteArrayExtra("image");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
         img = findViewById(R.id.user_logochat); // Assuming imageView is the ID of your ImageView in activity_chattry.xml
         img.setImageBitmap(bitmap);
