@@ -14,27 +14,26 @@
         android:theme="@style/Theme.Instagram"
         tools:targetApi="31">
         <activity
-            android:name=".db_con_check"
-            android:exported="true" >
+            android:name=".trysetting"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".db_con_check"
+            android:exported="true"></activity>
         <activity
             android:name=".ttttoooo"
-            android:exported="true">
-
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".dis_user"
-            android:exported="true" >
-
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".chattry"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Home_page"
             android:exported="false" />
@@ -58,9 +57,7 @@
             android:exported="false" />
         <activity
             android:name=".temp"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".register_page"
             android:exported="false" />
@@ -69,14 +66,13 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity2"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
