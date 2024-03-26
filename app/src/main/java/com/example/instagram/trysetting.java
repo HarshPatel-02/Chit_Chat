@@ -3,75 +3,67 @@ package com.example.instagram;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class trysetting extends AppCompatActivity {
+    TextView t1,t2,t3,t4,t5,t6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trysetting);
-    }
-}
-// SettingsActivity.java
+        t1=findViewById(R.id.txt1);
+        t2=findViewById(R.id.txt2);
+        t3=findViewById(R.id.txt3);
+        t4=findViewById(R.id.txt4);
+        t5=findViewById(R.id.txt5);
+        t6=findViewById(R.id.txt6);
 
-import android.os.Bundle;
-        import android.view.View;
-        import android.widget.TextView;
-        import android.widget.Toast;
-        import androidx.appcompat.app.AppCompatActivity;
-        import androidx.appcompat.widget.Toolbar;
+        t1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text1 click",Toast.LENGTH_LONG).show();
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+            }
+        });
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        t2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text2 click",Toast.LENGTH_LONG).show();
 
-        // Toolbar setup
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        });
+        t3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text3 click",Toast.LENGTH_LONG).show();
 
-        // Set click listeners for settings items
-        findViewById(R.id.profile_settings).setOnClickListener(this);
-        findViewById(R.id.privacy_settings).setOnClickListener(this);
-        findViewById(R.id.notifications_settings).setOnClickListener(this);
-        findViewById(R.id.help_settings).setOnClickListener(this);
-        findViewById(R.id.logout_settings).setOnClickListener(this);
-    }
+            }
+        });
+        t4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text4 click",Toast.LENGTH_LONG).show();
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.profile_settings:
-                // Handle Profile settings
-                showToast("Profile Settings clicked");
-                break;
-            case R.id.privacy_settings:
-                // Handle Privacy settings
-                showToast("Privacy Settings clicked");
-                break;
-            case R.id.notifications_settings:
-                // Handle Notifications settings
-                showToast("Notifications Settings clicked");
-                break;
-            case R.id.help_settings:
-                // Handle Help settings
-                showToast("Help Settings clicked");
-                break;
-            case R.id.logout_settings:
-                // Handle Log Out settings
-                showToast("Log Out clicked");
-                // Perform log out functionality here
-                // For example:
-                // logoutUser();
-                break;
-        }
-    }
+            }
+        });
+        t5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text5 click",Toast.LENGTH_LONG).show();
 
-    // Utility method to show toast message
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+        t6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"text6 click",Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
 }
