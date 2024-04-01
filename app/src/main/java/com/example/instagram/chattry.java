@@ -70,9 +70,6 @@ public class chattry extends AppCompatActivity {
         displayusername_image();
         loaddata(senderid,receiverid,msg,bitmap);
 
-
-
-
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,11 +83,7 @@ public class chattry extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
     private void loaddata(String senderid, String receiverid, String msg, Bitmap bitmap) {
         Toast.makeText(getApplicationContext(), "method called", Toast.LENGTH_SHORT).show();
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -105,7 +98,7 @@ public class chattry extends AppCompatActivity {
                     String receiver = dataSnapshot.child("receiver").getValue(String.class);
                     String message = dataSnapshot.child("messsge").getValue(String.class);
 
-                    // Check if sender, receiver, and message are not null
+
                     if (sender != null && receiver != null && message != null) {
                         if ((receiver.equals(receiverid) && sender.equals(senderid)) ||
                                 (receiver.equals(senderid) && sender.equals(receiverid))) {
@@ -121,7 +114,7 @@ public class chattry extends AppCompatActivity {
                     mediaPlayer1.start();
                 }
 
-                Log.d("msgokokok", mchat.toString());
+                //Log.d("msgokokok", mchat.toString());
 
                 // After updating mchat and sender, create and set adapter
                 messageAdapter = new MessageAdapter(getApplicationContext(), mchat, chatusername, bitmap);
@@ -170,15 +163,11 @@ public class chattry extends AppCompatActivity {
         img.setImageBitmap(bitmap);
         sendbtn=findViewById(R.id.sendButton);
         editText=findViewById(R.id.messageInputField);
-
-       /* messageAdapter=new MessageAdapter(this);
+        /* messageAdapter=new MessageAdapter(this);
         RecyclerView recyclerView;
         recyclerView=findViewById(R.id.messageList);
         recyclerView.setAdapter(messageAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
         */
     }
 

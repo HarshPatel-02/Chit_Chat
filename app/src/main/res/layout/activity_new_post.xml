@@ -113,7 +113,7 @@
         android:layout_alignParentBottom="true">
 
 
-
+<!--
         <ImageButton
             android:id="@+id/homebtn"
             android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
             android:layout_marginLeft="70sp"
 
             android:src="@drawable/tempimg" />
-
+-->
     </RelativeLayout>
 
 

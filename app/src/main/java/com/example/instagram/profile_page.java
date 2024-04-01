@@ -327,7 +327,7 @@ public class profile_page extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "from local",Toast.LENGTH_SHORT).show();
 
             fulltemp++;
-          //  progressDialog.dismiss();
+            progressDialog.dismiss();
 
         } else {
             // Image doesn't exist locally, download it from Firebase Storage

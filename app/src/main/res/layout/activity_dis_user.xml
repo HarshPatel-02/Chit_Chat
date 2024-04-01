@@ -49,7 +49,7 @@
         android:id="@+id/btnlist"
         android:layout_alignParentBottom="true">
 
-
+<!--
 
         <ImageButton
             android:id="@+id/homebtn"
@@ -87,7 +87,7 @@
             android:layout_marginLeft="70sp"
 
             android:src="@drawable/persone" />
-
+-->
     </RelativeLayout>
 
 </RelativeLayout>
