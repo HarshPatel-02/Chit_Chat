@@ -73,8 +73,6 @@ public class New_post extends AppCompatActivity {
         getimgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Intent igalary = new Intent(Intent.ACTION_PICK);
                 igalary.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(igalary, GALARY_REQ_CODE);

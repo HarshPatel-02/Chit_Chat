@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:padding="8sp"
     android:layout_height="wrap_content">
-
     <RelativeLayout
         android:layout_width="300sp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,5 @@
             android:textColor="#fff"
             android:padding="10sp"
             android:layout_alignParentRight="true"/>
-
     </RelativeLayout>
-    
 </RelativeLayout>

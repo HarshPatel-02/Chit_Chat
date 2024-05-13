@@ -46,7 +46,7 @@ public class Home_page extends AppCompatActivity {
 
     ArrayList<String> usernameswholike = new ArrayList<>();
 
-    private String lastItemId; // Declare a variable to store the key of the last item fetched
+    private String lastItemId;
 
     private ProgressBar loadingIndicator;
     int totalImagesToDownload = 0;
@@ -87,8 +87,7 @@ public class Home_page extends AppCompatActivity {
         loadingIndicator = findViewById(R.id.loading_indicator);
 
 
-        swipeRefreshLayout = findViewById(R.id.swip); // Initialize swipeRefreshLayout
-
+        swipeRefreshLayout = findViewById(R.id.swip);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
         ownusername = sharedPreferences.getString("usernm", "n");
@@ -102,7 +101,6 @@ public class Home_page extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        // Ensure that the userimages and username lists are initialized
         username.add("ajay");
         username.add("_._ajay_._");
         username.add("harsh");
@@ -122,7 +120,6 @@ public class Home_page extends AppCompatActivity {
 
         getusernamedata();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -131,12 +128,8 @@ public class Home_page extends AppCompatActivity {
 
                 if (totalItemCount < lastVisibleItemPosition + 3) {
                     if (!isLoading) {
-
                         if (lastrec_stop_scrol==true) {
-
-
                             loadingIndicator.setVisibility(View.VISIBLE);
-
                             isLoading = true;
                             //downloadimgcount = 0;
                             // getpostdata();

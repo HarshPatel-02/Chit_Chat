@@ -5,19 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +27,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class chattry extends AppCompatActivity {
+
+    private static final int SPEECH_REQUEST_CODE = 0;
     TextView t1;
     String receiverid,senderid;
     Bitmap bitmap;
@@ -40,7 +46,6 @@ public class chattry extends AppCompatActivity {
     private MediaPlayer mediaPlayer1;
     private String sender = "";
     ImageView img;
-    String sender_room,receiver_room;
 
     DatabaseReference databaseReference;
     MessageAdapter messageAdapter;
@@ -53,14 +58,28 @@ public class chattry extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
+    ImageButton speakbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chattry);
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        String token = task.getResult();
+                        // Save the token to your database or preferences
+                        Log.d("hiiiitoken",token);
+                    } else {
+                        // Handle the error
+                    }
+                });
+
         mediaPlayer = MediaPlayer.create(this, R.raw.send_sound);
         mediaPlayer1 = MediaPlayer.create(this, R.raw.receive_sound);
 
+        speakbtn=findViewById(R.id.btn_speech_to_text);
         recyclerView=findViewById(R.id.messageList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
@@ -69,6 +88,12 @@ public class chattry extends AppCompatActivity {
 
         displayusername_image();
         loaddata(senderid,receiverid,msg,bitmap);
+        speakbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSpeechToText(view);
+            }
+        });
 
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +108,30 @@ public class chattry extends AppCompatActivity {
 
             }
         });
+    }
+    public void startSpeechToText(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak something...");
+        try {
+            startActivityForResult(intent, SPEECH_REQUEST_CODE);
+        } catch (ActivityNotFoundException e) {
+            // Handle the exception if speech recognition is not supported
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String spokenText = matches.get(0);
+                TextView textView = findViewById(R.id.messageInputField);
+                textView.setText(spokenText);
+            }
+        }
     }
     private void loaddata(String senderid, String receiverid, String msg, Bitmap bitmap) {
         Toast.makeText(getApplicationContext(), "method called", Toast.LENGTH_SHORT).show();
@@ -107,16 +156,9 @@ public class chattry extends AppCompatActivity {
                         }
                     }
                 }
-
-                // Check if new messages were added
                 if (mchat.size() > initialSize) {
-                    // New message received, play sound
                     mediaPlayer1.start();
                 }
-
-                //Log.d("msgokokok", mchat.toString());
-
-                // After updating mchat and sender, create and set adapter
                 messageAdapter = new MessageAdapter(getApplicationContext(), mchat, chatusername, bitmap);
                 recyclerView.setAdapter(messageAdapter);
             }
@@ -127,9 +169,6 @@ public class chattry extends AppCompatActivity {
             }
         });
     }
-
-
-
     private void sendmessage(String sender,String receiver,String msg) {
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
 
@@ -138,17 +177,19 @@ public class chattry extends AppCompatActivity {
         hashMap.put("receiver",receiver);
         hashMap.put("messsge",msg);
         reference.child("Chats").push().setValue(hashMap);
-
         mediaPlayer.start();
 
-
+        sendFCMNotification(receiver, msg);
     }
 
-
-
+    private void sendFCMNotification(String receiver, String msg) {
+        FirebaseMessaging.getInstance().send(new RemoteMessage.Builder(receiver)
+                .setMessageId(UUID.randomUUID().toString())
+                .addData("message", msg)
+                .build());
+    }
 
     private void displayusername_image() {
-
         SharedPreferences pref = getSharedPreferences("user_data", Context.MODE_PRIVATE);
         senderid = pref.getString("usernm", "no");
 
@@ -159,7 +200,7 @@ public class chattry extends AppCompatActivity {
         byte[] byteArray = getIntent().getByteArrayExtra("image");
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-        img = findViewById(R.id.user_logochat); // Assuming imageView is the ID of your ImageView in activity_chattry.xml
+        img = findViewById(R.id.user_logochat);
         img.setImageBitmap(bitmap);
         sendbtn=findViewById(R.id.sendButton);
         editText=findViewById(R.id.messageInputField);

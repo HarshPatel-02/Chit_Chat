@@ -28,15 +28,15 @@
                 }
             }.start();
             File file = new File(getFilesDir(), "username.txt");
-            Intent i=new Intent(getApplicationContext(),MainActivity2.class);
-            startActivity(i);
+            //Intent i=new Intent(getApplicationContext(),MainActivity2.class);
+           // startActivity(i);
             if (file.exists()){
                 Intent i1=new Intent(getApplicationContext(),profile_page.class);
-                //startActivity(i1);
+                startActivity(i1);
                 finish();
             }else{
                 Intent i2=new Intent(getApplicationContext(),MainActivity2.class);
-                //startActivity(i2);
+                startActivity(i2);
                 finish();
             }
 

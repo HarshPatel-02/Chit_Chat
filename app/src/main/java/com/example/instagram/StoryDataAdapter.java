@@ -23,14 +23,12 @@ public class StoryDataAdapter extends RecyclerView.Adapter<StoryDataAdapter.View
         mImages = images;
         mNames = names;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.all_user_story, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Bitmap image = mImages.get(position);
@@ -39,16 +37,13 @@ public class StoryDataAdapter extends RecyclerView.Adapter<StoryDataAdapter.View
         holder.userstory.setImageBitmap(image);
         holder.username.setText(name);
     }
-
     @Override
     public int getItemCount() {
         return mImages.size();
     }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView userstory;
         TextView username;
-
         public ViewHolder(View itemView) {
             super(itemView);
             userstory = itemView.findViewById(R.id.homepageuserstoryphoto);

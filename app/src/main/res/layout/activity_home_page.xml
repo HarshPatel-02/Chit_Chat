@@ -3,36 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/black"
-    xmlns:androidx.swiperefreshlayout="http://schemas.android.com/apk/res-auto"
-
     android:layout_height="match_parent"
     tools:context=".Home_page">
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homepage_story_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:scrollbars="horizontal" />
-    
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_below="@id/homepage_story_listview"
         android:layout_height="match_parent"
         android:id="@+id/swip">
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_below="@id/homepage_story_listview"
         android:layout_width="match_parent"
         android:layout_marginTop="20sp"
         android:layout_height="wrap_content" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
     <ProgressBar
         android:id="@+id/loading_indicator"
         android:layout_width="wrap_content"
@@ -40,5 +30,4 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
-
 </RelativeLayout>

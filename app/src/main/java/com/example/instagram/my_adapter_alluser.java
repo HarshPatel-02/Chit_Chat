@@ -64,9 +64,6 @@ public class my_adapter_alluser extends BaseAdapter {
             ing.setImageBitmap(userimg.get(i));
             t1.setText(username.get(i));
             t2.setText(fullname.get(i));
-
-
-
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
